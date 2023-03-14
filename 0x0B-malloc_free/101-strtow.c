@@ -3,73 +3,74 @@
 #include <stdio.h>
 
 /**
-*  * count_word - helper function to count the number of words in a string
-*   * @s: string to evaluate
-*     * Return: number of words
-*/
-
+ * count_word - counts the number of words
+ * @s: The string to be analysed
+ *
+ * Return: Word count
+ */
 int count_word(char *s)
 {
-	int flag, c, w;
+	int a, b, flag;
 
+	b = 0;
 	flag = 0;
-	w = 0;
-	for (c = 0; s[c] != '\0'; c++)
-	{
-		if (s[c] == ' ')
-			flag = 0;
 
+	for (a = 0; s[a] != '\0'; a++)
+	{
+		if (s[a] == ' ')
+			flag = 0;
 		else if (flag == 0)
 		{
 			flag = 1;
-			w++;
+			b++;
 		}
 	}
-	return (w);
+	return (b);
 }
 
 /**
-* *strtow - splits a string into words
-* @str: string to split
-* Return: pointer to an array of strings (Success)
-* or NULL (Error)
-*/
-
+ * **strtow - Will split a string in to words
+ * @str: The string to be split
+ *
+ * Return: The pointer to an array of strings otherwise NULL
+ */
 char **strtow(char *str)
 {
-	char **matrix, *tmp;
-	int i, k = 0, len = 0, words, c = 0, start, end;
+	char *tmp, **mtx;
+	int x, y = 0, a = 0, len = 0, words, start, stop;
 
 	while (*(str + len))
 		len++;
 	words = count_word(str);
 	if (words == 0)
 		return (NULL);
-	matrix = (char **) malloc(sizeof(char *) * (words + 1));
-	if (matrix == NULL)
+
+	mtx = (char **) malloc(sizeof(char *) * (words + 1));
+	if (mtx == NULL)
 		return (NULL);
-	for (i = 0; i <= len; i++)
+
+	for (x = 0; x <= len; x++)
 	{
-		if (str[i] == ' ' || str[i] == '\0')
+		if (str[x] == ' ' || str[x] == '\0')
 		{
-			if (c)
+			if (a)
 			{
-				end = i;
-				tmp = (char *) malloc(sizeof(char) * (c + 1));
+				stop = x;
+				tmp = (char *) malloc(sizeof(char) * (a + 1));
 				if (tmp == NULL)
 					return (NULL);
-
-				while (start < end)
+				while (start < stop)
 					*tmp++ = str[start++];
 				*tmp = '\0';
-				matrix[k] = tmp - c;
-				k++;
-				c = 0;
+				mtx[y] = tmp - a;
+				y++;
+				a = 0;
 			}
 		}
-		else if (c++ == 0)
-			start = i;
+		else if (a++ == 0)
+			start = x;
 	}
-	matrix[k] = NULL;
-	return (matrix);
+	mtx[y] = NULL;
+
+	return (mtx);
 }
